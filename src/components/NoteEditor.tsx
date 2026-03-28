@@ -17,7 +17,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
 
   const selectedNote = notes.find((n) => n.id === selectedNoteId);
 
-  const handleTagsChange = (newTags: string[]) => {
+  const handleTagsSync = (newTags: string[]) => {
     setTags(newTags);
     if (selectedNoteId && !isCreating) {
       editNote(selectedNoteId, { tags: newTags });
@@ -35,7 +35,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
       setContent('');
       setTags([]);
     }
-  }, [selectedNote, isCreating]);  
+  }, [selectedNote, isCreating]);
 
   const handleSave = async () => {
     if (!title.trim()) {
@@ -100,7 +100,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
       />
 
       {/* 태그 입력 */}
-      <TagInput tags={tags} onChange={handleTagsChange} />
+      <TagInput tags={tags} onChange={handleTagsSync} />
 
       {/* 버튼 영역 */}
       <div className="flex gap-3 mt-6 pt-4 border-t border-border">

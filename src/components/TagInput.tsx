@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { validateTag } from '../utils/tagValidation';
+import { validateTag, getTagError, MAX_TAG_COUNT } from '../utils/tagValidation';
 
 interface TagInputProps {
   tags: string[];
@@ -9,7 +9,7 @@ interface TagInputProps {
 export function TagInput({ tags, onChange }: TagInputProps) {
   const [input, setInput] = useState('');
   const [error, setError] = useState('');
-  const isMaxed = tags.length >= 5;
+  const isMaxed = tags.length >= MAX_TAG_COUNT;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter' && e.key !== ',') return;
@@ -23,11 +23,7 @@ export function TagInput({ tags, onChange }: TagInputProps) {
     const { valid, normalized } = validateTag(trimmed);
 
     if (!valid) {
-      if (trimmed.length > 20) {
-        setError('20자 이하로 입력해주세요');
-      } else {
-        setError('한글, 영문, 숫자만 입력할 수 있습니다');
-      }
+      setError(getTagError(trimmed));
       setInput('');
       return;
     }
@@ -62,7 +58,7 @@ export function TagInput({ tags, onChange }: TagInputProps) {
         disabled={isMaxed}
         placeholder="태그 입력"
       />
-      {isMaxed && <p>최대 5개까지 추가할 수 있습니다</p>}
+      {isMaxed && <p>최대 {MAX_TAG_COUNT}개까지 추가할 수 있습니다</p>}
       {error && <p>{error}</p>}
     </div>
   );
