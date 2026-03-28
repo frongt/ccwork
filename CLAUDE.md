@@ -94,6 +94,7 @@ App (selectedNoteId, isCreating 상태 관리)
 ## 주의사항
 
 - `db.json`은 json-server의 실제 데이터 파일 — 서버 실행 중 직접 수정 시 충돌 가능
-- `Note` 타입에 `tags` 필드는 아직 없음 (강의에서 추가 예정)
+- `Note` 타입에 `tags: string[]` 필드 추가됨 — 태그 추가/제거 시 즉시 PATCH 요청 발생
 - API URL이 하드코딩되어 있음 (`http://localhost:3001`)
+- `db.json`에 대한 Vite watch 제외 설정 필수 — json-server가 `db.json`을 쓸 때 HMR이 발동하면 앱 state가 리셋됨 (`vite.config.ts`의 `server.watch.ignored`)
 - 테스트 셋업: `src/test-setup.ts`에서 `@testing-library/jest-dom` import

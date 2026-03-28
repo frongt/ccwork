@@ -84,5 +84,46 @@ describe('TagInput', () => {
 
       expect(screen.getByRole('textbox')).toBeDisabled();
     });
+
+    it('should display error message when duplicate tag is entered', () => {
+      const onChange = vi.fn();
+      render(<TagInput tags={['react']} onChange={onChange} />);
+
+      const input = screen.getByRole('textbox');
+      fireEvent.change(input, { target: { value: 'react' } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+
+      expect(screen.getByText(/이미 존재하는 태그/)).toBeInTheDocument();
+    });
+
+    it('should display error message when tag count exceeds 5', () => {
+      const onChange = vi.fn();
+      const tags = ['a', 'b', 'c', 'd', 'e'];
+      render(<TagInput tags={tags} onChange={onChange} />);
+
+      expect(screen.getByText(/최대 5개/)).toBeInTheDocument();
+    });
+
+    it('should display error message when tag contains invalid characters', () => {
+      const onChange = vi.fn();
+      render(<TagInput tags={[]} onChange={onChange} />);
+
+      const input = screen.getByRole('textbox');
+      fireEvent.change(input, { target: { value: 'tag!' } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+
+      expect(screen.getByText(/한글, 영문, 숫자만/)).toBeInTheDocument();
+    });
+
+    it('should display error message when tag exceeds 20 characters', () => {
+      const onChange = vi.fn();
+      render(<TagInput tags={[]} onChange={onChange} />);
+
+      const input = screen.getByRole('textbox');
+      fireEvent.change(input, { target: { value: 'a'.repeat(21) } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+
+      expect(screen.getByText(/20자 이하/)).toBeInTheDocument();
+    });
   });
 });

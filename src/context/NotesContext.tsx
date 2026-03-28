@@ -6,7 +6,7 @@ interface NotesContextType {
   notes: Note[];
   loading: boolean;
   error: string | null;
-  addNote: (title: string, content: string) => Promise<void>;
+  addNote: (title: string, content: string, tags: string[]) => Promise<void>;
   editNote: (id: string, updates: Partial<Note>) => Promise<void>;
   removeNote: (id: string) => Promise<void>;
 }
@@ -26,8 +26,8 @@ export function NotesProvider({ children }: { children: ReactNode }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const addNote = async (title: string, content: string) => {
-    const newNote = await api.createNote({ title, content });
+  const addNote = async (title: string, content: string, tags: string[]) => {
+    const newNote = await api.createNote({ title, content, tags });
     setNotes((prev) => [...prev, newNote]);
   };
 

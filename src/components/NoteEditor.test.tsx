@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { NoteEditor } from './NoteEditor';
 import { NotesProvider } from '../context/NotesContext';
+import * as notesApi from '../api/notes';
 
 // json-server를 mock
 vi.mock('../api/notes', () => ({
@@ -90,6 +91,61 @@ describe('NoteEditor', () => {
       await waitFor(() => {
         expect(screen.getByText('react')).toBeInTheDocument();
         expect(screen.getByText('typescript')).toBeInTheDocument();
+      });
+    });
+
+    it('should not submit form when Enter is pressed to add tag', async () => {
+      const onDone = vi.fn();
+      renderWithProvider(<NoteEditor selectedNoteId="1" isCreating={false} onDone={onDone} />);
+
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('테스트 노트')).toBeInTheDocument();
+      });
+
+      const tagInput = screen.getByPlaceholderText(/태그/);
+      fireEvent.change(tagInput, { target: { value: 'vitest' } });
+      fireEvent.keyDown(tagInput, { key: 'Enter' });
+
+      // 태그 추가 후에도 편집 화면에 머물러야 함 (onDone 호출 안 됨)
+      expect(onDone).not.toHaveBeenCalled();
+      expect(screen.getByDisplayValue('테스트 노트')).toBeInTheDocument();
+    });
+
+    it('should send PATCH request immediately when tag is added (without save button)', async () => {
+      const onDone = vi.fn();
+      renderWithProvider(<NoteEditor selectedNoteId="1" isCreating={false} onDone={onDone} />);
+
+      await waitFor(() => {
+        expect(screen.getByDisplayValue('테스트 노트')).toBeInTheDocument();
+      });
+
+      const tagInput = screen.getByPlaceholderText(/태그/);
+      fireEvent.change(tagInput, { target: { value: 'vitest' } });
+      fireEvent.keyDown(tagInput, { key: 'Enter' });
+
+      await waitFor(() => {
+        expect(notesApi.updateNote).toHaveBeenCalledWith('1', {
+          tags: ['react', 'typescript', 'vitest'],
+        });
+      });
+    });
+
+    it('should send PATCH request immediately when tag is removed (without save button)', async () => {
+      const onDone = vi.fn();
+      renderWithProvider(<NoteEditor selectedNoteId="1" isCreating={false} onDone={onDone} />);
+
+      await waitFor(() => {
+        expect(screen.getByText('react')).toBeInTheDocument();
+      });
+
+      // react 태그의 × 버튼 클릭
+      const deleteButtons = screen.getAllByRole('button', { name: '×' });
+      fireEvent.click(deleteButtons[0]);
+
+      await waitFor(() => {
+        expect(notesApi.updateNote).toHaveBeenCalledWith('1', {
+          tags: ['typescript'],
+        });
       });
     });
   });
