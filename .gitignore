@@ -18,7 +18,7 @@ dist-ssr/
 .env.*.local
 
 # Claude Code
-.claude/
+.claude/settings.local.json
 
 # Docs (generated)
 docs/
