@@ -43,11 +43,19 @@ export function TagInput({ tags, onChange }: TagInputProps) {
   };
 
   return (
-    <div>
+    <div className="flex flex-wrap items-center gap-2">
       {tags.map((tag, i) => (
-        <span key={tag}>
+        <span
+          key={tag}
+          className="inline-flex items-center gap-1 bg-muted text-foreground px-3 py-1 rounded-xl text-sm"
+        >
           {tag}
-          <button onClick={() => handleRemove(i)}>×</button>
+          <button
+            onClick={() => handleRemove(i)}
+            className="text-muted-foreground hover:text-foreground cursor-pointer"
+          >
+            ×
+          </button>
         </span>
       ))}
       <input
