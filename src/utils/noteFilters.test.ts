@@ -1,10 +1,10 @@
-import { extractAllTags, filterNotesByTags } from './noteFilters';
+import { extractAllTags, filterNotesByTags, filterNotesBySearch } from './noteFilters';
 import { Note } from '../types/note';
 
-const createNote = (id: string, tags: string[]): Note => ({
+const createNote = (id: string, tags: string[], title?: string, content?: string): Note => ({
   id,
-  title: `노트 ${id}`,
-  content: '내용',
+  title: title ?? `노트 ${id}`,
+  content: content ?? '내용',
   tags,
   createdAt: '2024-01-01T00:00:00.000Z',
   updatedAt: '2024-01-01T00:00:00.000Z',
@@ -71,6 +71,66 @@ describe('filterNotesByTags', () => {
   describe('예외', () => {
     it('매칭되는 노트가 없으면 빈 배열을 반환한다', () => {
       const result = filterNotesByTags(notes, ['nonexistent']);
+
+      expect(result).toEqual([]);
+    });
+  });
+});
+
+describe('filterNotesBySearch', () => {
+  const notes = [
+    createNote('1', [], 'React 학습 노트', '오늘은 컴포넌트를 배웠다'),
+    createNote('2', [], 'TypeScript 정리', 'interface와 type의 차이'),
+    createNote('3', [], '일기', '오늘 날씨가 좋았다'),
+  ];
+
+  describe('정상', () => {
+    it('검색어가 제목에 포함된 노트를 반환한다', () => {
+      const result = filterNotesBySearch(notes, 'React');
+
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe('1');
+    });
+
+    it('검색어가 본문에 포함된 노트를 반환한다', () => {
+      const result = filterNotesBySearch(notes, '컴포넌트');
+
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe('1');
+    });
+
+    it('대소문자를 구분하지 않고 검색한다', () => {
+      const result = filterNotesBySearch(notes, 'react');
+
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe('1');
+    });
+  });
+
+  describe('경계', () => {
+    it('검색어가 빈 문자열이면 전체 노트를 반환한다', () => {
+      const result = filterNotesBySearch(notes, '');
+
+      expect(result).toHaveLength(3);
+    });
+
+    it('검색어 앞뒤 공백을 trim 처리한다', () => {
+      const result = filterNotesBySearch(notes, '  React  ');
+
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe('1');
+    });
+
+    it('공백만 입력하면 전체 노트를 반환한다', () => {
+      const result = filterNotesBySearch(notes, '   ');
+
+      expect(result).toHaveLength(3);
+    });
+  });
+
+  describe('예외', () => {
+    it('매칭되는 노트가 없으면 빈 배열을 반환한다', () => {
+      const result = filterNotesBySearch(notes, 'nonexistent');
 
       expect(result).toEqual([]);
     });

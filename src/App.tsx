@@ -4,12 +4,14 @@ import { Layout } from './components/Layout';
 import { NoteList } from './components/NoteList';
 import { NoteEditor } from './components/NoteEditor';
 import { TagFilter } from './components/TagFilter';
+import { SearchBar } from './components/SearchBar';
 import { extractAllTags } from './utils/noteFilters';
 
 function AppContent() {
   const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null);
   const [isCreating, setIsCreating] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const { notes } = useNotes();
 
   const allTags = extractAllTags(notes);
@@ -39,10 +41,12 @@ function AppContent() {
       onNewNote={handleNewNote}
       sidebar={
         <>
+          <SearchBar onSearch={setSearchQuery} />
           <NoteList
             selectedNoteId={selectedNoteId}
             onSelect={handleSelectNote}
             selectedTags={selectedTags}
+            searchQuery={searchQuery}
           />
           <TagFilter allTags={allTags} selectedTags={selectedTags} onToggle={handleToggleTag} />
         </>

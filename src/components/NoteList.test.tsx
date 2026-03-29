@@ -42,10 +42,15 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-function renderNoteList(selectedTags: string[] = []) {
+function renderNoteList(selectedTags: string[] = [], searchQuery: string = '') {
   return render(
     <NotesProvider>
-      <NoteList selectedNoteId={null} onSelect={vi.fn()} selectedTags={selectedTags} />
+      <NoteList
+        selectedNoteId={null}
+        onSelect={vi.fn()}
+        selectedTags={selectedTags}
+        searchQuery={searchQuery}
+      />
     </NotesProvider>,
   );
 }
@@ -60,9 +65,23 @@ describe('NoteList', () => {
       expect(screen.queryByText('React 노트')).not.toBeInTheDocument();
       expect(screen.queryByText('빈 태그 노트')).not.toBeInTheDocument();
     });
+
+    it('searchQuery가 있으면 검색된 노트만 표시한다', async () => {
+      renderNoteList([], 'React');
+
+      expect(await screen.findByText('React 노트')).toBeInTheDocument();
+      expect(screen.queryByText('TypeScript 노트')).not.toBeInTheDocument();
+      expect(screen.queryByText('빈 태그 노트')).not.toBeInTheDocument();
+    });
   });
 
   describe('예외', () => {
+    it('검색 결과가 없으면 "검색 결과가 없습니다" 메시지를 표시한다', async () => {
+      renderNoteList([], 'nonexistent');
+
+      expect(await screen.findByText('검색 결과가 없습니다')).toBeInTheDocument();
+    });
+
     it('노트가 변경되면(태그 추가/삭제) 태그 목록이 자동 갱신된다', async () => {
       const { rerender } = renderNoteList([]);
 
@@ -74,7 +93,12 @@ describe('NoteList', () => {
       // selectedTags 변경으로 필터링
       rerender(
         <NotesProvider>
-          <NoteList selectedNoteId={null} onSelect={vi.fn()} selectedTags={['react']} />
+          <NoteList
+            selectedNoteId={null}
+            onSelect={vi.fn()}
+            selectedTags={['react']}
+            searchQuery=""
+          />
         </NotesProvider>,
       );
 

@@ -1,14 +1,15 @@
 import { useNotes } from '../context/NotesContext';
 import { NoteItem } from './NoteItem';
-import { filterNotesByTags } from '../utils/noteFilters';
+import { filterNotesByTags, filterNotesBySearch } from '../utils/noteFilters';
 
 interface NoteListProps {
   selectedNoteId: string | null;
   onSelect: (id: string) => void;
   selectedTags: string[];
+  searchQuery: string;
 }
 
-export function NoteList({ selectedNoteId, onSelect, selectedTags }: NoteListProps) {
+export function NoteList({ selectedNoteId, onSelect, selectedTags, searchQuery }: NoteListProps) {
   const { notes, loading, error, removeNote } = useNotes();
 
   if (loading) {
@@ -23,7 +24,12 @@ export function NoteList({ selectedNoteId, onSelect, selectedTags }: NoteListPro
     return <p className="text-sm text-muted-foreground text-center py-8">노트가 없습니다</p>;
   }
 
-  const filteredNotes = filterNotesByTags(notes, selectedTags);
+  const tagFiltered = filterNotesByTags(notes, selectedTags);
+  const filteredNotes = filterNotesBySearch(tagFiltered, searchQuery);
+
+  if (filteredNotes.length === 0) {
+    return <p className="text-sm text-muted-foreground text-center py-8">검색 결과가 없습니다</p>;
+  }
 
   return (
     <>
