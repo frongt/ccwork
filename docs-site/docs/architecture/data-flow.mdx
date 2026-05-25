@@ -1,0 +1,85 @@
+---
+id: data-flow
+title: 데이터 흐름
+sidebar_label: 데이터 흐름
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+사용자 액션 기준 — 노트 생성 / 수정 / 삭제 비즈니스 플로우
+
+<Tabs>
+  <TabItem value="create" label="노트 생성" default>
+
+```mermaid
+flowchart TD
+  A([새 노트 버튼 클릭]) --> B["isCreating=true\n빈 폼 표시"]
+  B --> C[/제목 · 내용 입력/]
+  C --> D([저장 클릭])
+  D --> E{제목이 비어있나?}
+  E -->|Yes| F[경고 메시지\n입력 중단]
+  E -->|No| G{저장 성공?}
+  G -->|Yes| H["notes에 새 노트 추가\nisCreating=false"]
+  H --> I([목록에 새 노트 표시])
+  G -->|No| K[오류 메시지 표시]
+
+  style A fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+  style I fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+  style F fill:#3a1a1a,stroke:#f38ba8,color:#f38ba8
+  style K fill:#3a1a1a,stroke:#f38ba8,color:#f38ba8
+  style E fill:#2a2a20,stroke:#f9e2af,color:#f9e2af
+  style G fill:#2a2a20,stroke:#f9e2af,color:#f9e2af
+  style B fill:#2a1a40,stroke:#cba6f7,color:#cba6f7
+  style H fill:#2a1a40,stroke:#cba6f7,color:#cba6f7
+  style C fill:#181825,stroke:#45475a,color:#cdd6f4
+  style D fill:#181825,stroke:#45475a,color:#cdd6f4
+```
+
+  </TabItem>
+  <TabItem value="edit" label="노트 수정">
+
+```mermaid
+flowchart TD
+  A([노트 클릭]) --> B["selectedNoteId=id\n기존 내용으로 폼 채움"]
+  B --> C[/제목 · 내용 수정/]
+  C --> D([저장 클릭])
+  D --> E{저장 성공?}
+  E -->|Yes| F["notes에서 해당 노트 교체"]
+  F --> G([목록 · 에디터 업데이트])
+  E -->|No| H[오류 메시지 표시]
+
+  C --> D2([취소 클릭])
+  D2 --> I["isCreating=false\n폼 닫힘"]
+
+  style A fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+  style G fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+  style H fill:#3a1a1a,stroke:#f38ba8,color:#f38ba8
+  style E fill:#2a2a20,stroke:#f9e2af,color:#f9e2af
+  style B fill:#2a1a40,stroke:#cba6f7,color:#cba6f7
+  style F fill:#2a1a40,stroke:#cba6f7,color:#cba6f7
+  style C fill:#181825,stroke:#45475a,color:#cdd6f4
+  style D fill:#181825,stroke:#45475a,color:#cdd6f4
+  style D2 fill:#181825,stroke:#45475a,color:#cdd6f4
+  style I fill:#181825,stroke:#45475a,color:#6c7086
+```
+
+  </TabItem>
+  <TabItem value="delete" label="노트 삭제">
+
+```mermaid
+flowchart TD
+  A([삭제 버튼 클릭]) --> B{삭제 성공?}
+  B -->|Yes| C["notes에서 해당 노트 제거"]
+  C --> D([목록에서 노트 사라짐])
+  B -->|No| E[오류 메시지 표시]
+
+  style A fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+  style D fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+  style E fill:#3a1a1a,stroke:#f38ba8,color:#f38ba8
+  style B fill:#2a2a20,stroke:#f9e2af,color:#f9e2af
+  style C fill:#2a1a40,stroke:#cba6f7,color:#cba6f7
+```
+
+  </TabItem>
+</Tabs>

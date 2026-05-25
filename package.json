@@ -9,14 +9,30 @@
     "lint": "eslint . --fix",
     "format": "prettier --write .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
+    "docs": "npm run --prefix docs-site start",
+    "docs:build": "npm run --prefix docs-site build",
+    "prepare": "husky"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.6.0",
+    "react-quill-new": "^3.8.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
     "@eslint/js": "^9.21.0",
+    "@storybook/addon-essentials": "^8.6.18",
+    "@storybook/addon-interactions": "^8.6.18",
+    "@storybook/blocks": "^8",
+    "@storybook/react": "^8.6.18",
+    "@storybook/react-vite": "^8.6.18",
+    "@storybook/test": "^8.6.18",
     "@tailwindcss/vite": "^4.0.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -29,13 +45,22 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
-    "json-server": "^1.0.0-beta.3",
+    "husky": "^9.1.7",
     "jsdom": "^26.0.0",
+    "json-server": "^1.0.0-beta.3",
+    "lint-staged": "^17.0.5",
     "prettier": "^3.5.2",
+    "storybook": "^8.6.18",
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0",
     "vite": "^6.2.0",
     "vitest": "^3.0.8"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "eslint --fix"
+  },
+  "volta": {
+    "node": "24.15.0"
   }
 }

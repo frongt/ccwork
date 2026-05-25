@@ -1,0 +1,26 @@
+#!/bin/sh
+# $1 = 커밋 메시지 파일 경로, $2 = 커밋 소스 (message/template/merge/squash/commit)
+
+# -m 옵션으로 직접 메시지를 입력한 경우 건너뜀
+[ "$2" = "message" ] && exit 0
+
+diff=$(git diff --cached)
+
+if [ -z "$diff" ]; then
+  exit 0
+fi
+
+# Claude가 diff를 분석해 Conventional Commits 형식으로 메시지 생성
+generated=$(echo "$diff" | claude -p \
+  "다음 git diff를 분석해 Conventional Commits 형식의 커밋 메시지를 한 줄로 작성해줘.
+규칙:
+- 형식: type(scope): subject
+- type: feat | fix | docs | style | refactor | test | chore
+- scope는 변경된 주요 파일/모듈명 (선택)
+- subject는 한국어로 간결하게
+- 오직 커밋 메시지 한 줄만 출력, 설명 없이" \
+  --print 2>/dev/null)
+
+if [ -n "$generated" ]; then
+  echo "$generated" > "$1"
+fi

@@ -1,0 +1,84 @@
+---
+id: state-management
+title: 상태 관리
+sidebar_label: 상태 관리
+---
+
+전역 Context 상태, 컴포넌트 로컬 상태
+
+## 전역 상태 — NotesContext
+
+```mermaid
+flowchart LR
+  subgraph CTX ["NotesContext"]
+    direction TB
+    S1["notes: Note[]"]
+    S2["loading: boolean"]
+    S3["error: string | null"]
+    A1["addNote(title, content)"]
+    A2["editNote(id, updates)"]
+    A3["removeNote(id)"]
+  end
+
+  NL["NoteList"]
+  NE["NoteEditor"]
+
+  CTX -->|"notes · loading · error\nremoveNote"| NL
+  CTX -->|"notes · addNote · editNote"| NE
+
+  style CTX fill:#1e1225,stroke:#cba6f7,color:#cdd6f4
+  style NL fill:#1a2a40,stroke:#89b4fa,color:#89b4fa
+  style NE fill:#1a2a40,stroke:#89b4fa,color:#89b4fa
+  style S1 fill:#2a1a40,stroke:#cba6f7,color:#cba6f7
+  style S2 fill:#2a1a40,stroke:#cba6f7,color:#cba6f7
+  style S3 fill:#2a1a40,stroke:#cba6f7,color:#cba6f7
+  style A1 fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+  style A2 fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+  style A3 fill:#1e3a2f,stroke:#a6e3a1,color:#a6e3a1
+```
+
+## 컴포넌트별 로컬 상태
+
+```mermaid
+flowchart TD
+  subgraph APP ["App.tsx"]
+    A1["selectedNoteId\nstring | null = null"]
+    A2["isCreating\nboolean = false"]
+  end
+
+  subgraph NE ["NoteEditor.tsx"]
+    N1["title\nstring = ''"]
+    N2["content\nstring = ''"]
+    N3["saving\nboolean = false"]
+  end
+
+  A1 & A2 -->|"selectedNoteId\nisCreating"| NE
+
+  style APP fill:#1e3a2f,stroke:#a6e3a1,color:#cdd6f4
+  style NE fill:#1a2230,stroke:#89b4fa,color:#cdd6f4
+  style A1 fill:#183028,stroke:#a6e3a1,color:#a6e3a1
+  style A2 fill:#183028,stroke:#a6e3a1,color:#a6e3a1
+  style N1 fill:#1a2a40,stroke:#89b4fa,color:#89b4fa
+  style N2 fill:#1a2a40,stroke:#89b4fa,color:#89b4fa
+  style N3 fill:#1a2a40,stroke:#89b4fa,color:#89b4fa
+```
+
+## 상태 명세
+
+### 전역 상태 (Context)
+
+| 변수 | 타입 | 초기값 |
+|------|------|--------|
+| `notes` | `Note[]` | `[]` |
+| `loading` | `boolean` | `true` |
+| `error` | `string \| null` | `null` |
+
+### 로컬 상태 (useState)
+
+| 변수 | 타입 | 위치 |
+|------|------|------|
+| `selectedNoteId` | `string \| null` | App |
+| `isCreating` | `boolean` | App |
+| `title` | `string` | NoteEditor |
+| `content` | `string` | NoteEditor |
+| `saving` | `boolean` | NoteEditor |
