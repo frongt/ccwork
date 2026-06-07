@@ -20,6 +20,7 @@ npm run dev
 - API: http://localhost:3001/notes
 
 ## 스크립트
+## 실행 
 
 | 명령어 | 설명 |
 |--------|------|
