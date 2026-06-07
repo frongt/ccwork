@@ -7,7 +7,7 @@ interface NoteListProps {
 }
 
 export function NoteList({ selectedNoteId, onSelect }: NoteListProps) {
-  const { notes, loading, error, removeNote } = useNotes();
+  const { notes, loading, error, deleteNote } = useNotes();
 
   if (loading) {
     return (
@@ -38,7 +38,7 @@ export function NoteList({ selectedNoteId, onSelect }: NoteListProps) {
           note={note}
           isSelected={note.id === selectedNoteId}
           onSelect={onSelect}
-          onDelete={removeNote}
+          onDelete={deleteNote}
         />
       ))}
     </>
