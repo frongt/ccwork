@@ -97,3 +97,8 @@ src/
 ## git commit / push 설정
 
 git 훅에서 오류가 났을 경우 직접 수정해서 commit 또는 push를 진행하지 않는다. 오류가 났을 경우엔 어느 파일에서 어떤 오류가 났는지 정보를 제공한다.
+
+### 커밋 메시지 규칙 (commitlint)
+
+- 형식: `type: 제목` (Conventional Commits, 한국어 제목). type은 `feat`/`fix`/`docs`/`refactor`/`test`/`chore` 등.
+- 제목 필수, 본문 필수(빈 줄 제외 **최소 2줄**). `Co-Authored-By` 같은 푸터는 본문 줄 수에 포함되지 않는다.
