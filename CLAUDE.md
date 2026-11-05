@@ -41,7 +41,7 @@ src/
 │       │   └── NoteItem.tsx  #   카드 UI, 삭제 버튼은 stopPropagation
 │       └── NoteEditor.tsx    # [main] 제목/내용 폼, 생성/수정 겸용
 ├── context/
-│   └── NotesContext.tsx      # NotesProvider: notes/loading/error + createNote/updateNote/deleteNote
+│   └── NotesContext.tsx      # NotesProvider: notes/loading/error + addNote/editNote/removeNote
 │                             #   · 마운트 시 fetchNotes로 초기 로딩
 │                             #   · 서버 응답 후 로컬 상태 갱신 (낙관적 업데이트 없음)
 │                             #   · useNotes()는 Provider 밖에서 호출 시 throw
@@ -56,7 +56,9 @@ src/
 ## 구현 패턴 / 컨벤션
 
 ### 컴포넌트 구현 패턴
+
 - 함수형 컴포넌트 + **named export** (`export function X`). 기본 export는 `App`만.
+- 컴포넌트를 생성할 땐, export 하는 컴포넌트명과 파일명이 일치해야 한다.
 - props는 컴포넌트 바로 위에 `XxxProps` 인터페이스로 정의하고 파라미터에서 구조 분해.
 - 데이터가 필요한 컴포넌트(`NoteList`, `NoteEditor`)는 `useNotes()`를 직접 호출. `NoteItem`/`Layout`은 props만 받는 순수 표현 컴포넌트.
 - 레이아웃 컴포넌트는 `ReactNode` 슬롯 props(`sidebar`, `main`)로 자식을 받는다.
@@ -65,18 +67,20 @@ src/
 - **NoteEditor 폼 동기화**: `selectedNoteId`/`isCreating` 변경 시 `useEffect`로 로컬 `title/content`를 리셋. 의존성에 `selectedNote`를 의도적으로 뺐기에 `eslint-disable-line react-hooks/exhaustive-deps`가 붙어 있다.
 
 ### 상태관리 방식
+
 - 외부 라이브러리 없이 **React 내장 `useState` + Context**만 사용 (reducer, memo 계열 훅 없음).
 - 서버 데이터(`notes/loading/error`) → `NotesContext`. UI 선택 상태(`selectedNoteId`, `isCreating`) → `App`의 `useState` 후 props drilling. 폼 입력(`title/content/saving`) → `NoteEditor` 로컬 `useState`.
 - 변경 후에는 서버 응답으로 로컬 배열을 갱신(`[...prev, new]`, `map`, `filter`)하며, 재조회(refetch)는 하지 않는다.
 
 ### API 호출 패턴
+
 - 리소스당 `api/<resource>.ts`에 `async` 함수 모음, 컴포넌트는 직접 `fetch`하지 않고 **Context 경유**로만 호출 (`import * as api`).
 - 순서: `fetch` → `if (!res.ok) throw new Error('Failed to ...')` → `res.json()`. 삭제만 반환값 없음(`Promise<void>`).
 - 수정은 `PATCH`(부분 갱신) + `updatedAt` 자동 갱신. 헤더는 `Content-Type: application/json`.
-- 에러는 API → Context로 그대로 전파되고, 호출한 컴포넌트(`NoteEditor`, `NoteList`)가 `try/catch`에서 **`console.error`로만** 처리한다. `alert()`는 사용하지 않는다.
-- CRUD 동사는 API·Context 모두 `create/update/delete`로 통일 (`add/edit/remove` 사용 금지).
+- 에러는 API → Context로 그대로 전파되고, 호출한 컴포넌트(`NoteEditor`)가 `try/catch`에서 `alert`로 처리.
 
 ### 네이밍 패턴
+
 - 파일: 컴포넌트·Context는 `PascalCase.tsx`, API·타입은 `camelCase.ts`.
 - Props 콜백은 `onXxx` (`onSelect`, `onDelete`, `onDone`, `onNewNote`), 이를 구현하는 핸들러는 `handleXxx` (`handleSave`, `handleSelectNote`).
 - 불리언 상태는 `isXxx` (`isCreating`, `isSelected`), 단 `loading`/`saving`은 예외.
@@ -86,19 +90,10 @@ src/
 - **Prettier** (`.prettierrc`): 세미콜론, 작은따옴표, 2칸 들여쓰기, trailing comma `all`, printWidth 100.
 - **ESLint** (flat config, `eslint.config.js`): `typescript-eslint` recommended + `react-hooks` + `react-refresh/only-export-components`(warn). 참고로 `NotesContext.tsx`는 Provider와 훅을 함께 export한다.
 
-## 발견된 불일치 / 주의점
-
-- **파일명 단/복수**: `api/notes.ts`(복수) vs `types/note.ts`(단수).
-- **불리언 네이밍**: `isCreating`/`isSelected` vs `loading`/`saving`(접두어 없음).
-- **비동기 스타일**: `NotesContext`의 초기 로딩은 `.then().catch().finally()`, 나머지는 `async/await`.
-- **에러 처리**: 모두 `console.error`뿐이라 사용자에게는 실패가 보이지 않는다(저장/삭제 실패 시 UI 피드백 없음). 목록 로딩 실패만 `error` 상태로 화면에 표시. 삭제 확인창은 없다.
-- **에러 언어 혼재**: API 에러 메시지는 영어(`Failed to fetch notes`)인데 UI는 한국어라 `오류: Failed to fetch notes`처럼 섞여 표시된다.
-- **스타일링 혼재**: 기본은 Tailwind 클래스지만 `Layout`은 `style={{ fontFamily }}`, `style={{ height: 'calc(...)' }}` 인라인 스타일도 사용. 그림자(`shadow-[...]`)와 섹션 라벨 클래스 문자열이 여러 파일에 복붙되어 있다.
-- **타입 import**: 타입에도 `import { Note }`를 쓰고 `import type`은 쓰지 않는다.
-- **Context 값 비메모이제이션**: `value` 객체와 함수가 매 렌더 새로 생성된다 (`useCallback`/`useMemo` 없음).
-- **취소 버튼**: `NoteEditor`의 취소는 `onDone`(`isCreating=false`)만 호출해, 수정 중 취소해도 입력값이 되돌려지지 않는다.
-- **`updateNote`**: `Partial<Note>`라 `id`/`createdAt`도 덮어쓸 수 있다.
-
 ## 테스트 설정
 
 `vite.config.ts`의 `test` 블록: `globals: true`, `environment: 'jsdom'`, `setupFiles: ./src/test-setup.ts`(`@testing-library/jest-dom` 로드). 컴포넌트 테스트에서 `useNotes`/`api` 모듈은 mock 하거나 `NotesProvider`로 감싸서 사용해야 한다 (`fetch`가 실제 `localhost:3001`을 호출함).
+
+## git commit / push 설정
+
+git 훅에서 오류가 났을 경우 직접 수정해서 commit 또는 push를 진행하지 않는다. 오류가 났을 경우엔 어느 파일에서 어떤 오류가 났는지 정보를 제공한다.
