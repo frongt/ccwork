@@ -7,7 +7,15 @@ interface NoteListProps {
 }
 
 export function NoteList({ selectedNoteId, onSelect }: NoteListProps) {
-  const { notes, loading, error, removeNote } = useNotes();
+  const { notes, loading, error, deleteNote } = useNotes();
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteNote(id);
+    } catch (e) {
+      console.error('삭제에 실패했습니다', e);
+    }
+  };
 
   if (loading) {
     return (
@@ -38,7 +46,7 @@ export function NoteList({ selectedNoteId, onSelect }: NoteListProps) {
           note={note}
           isSelected={note.id === selectedNoteId}
           onSelect={onSelect}
-          onDelete={removeNote}
+          onDelete={handleDelete}
         />
       ))}
     </>

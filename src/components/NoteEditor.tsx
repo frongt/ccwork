@@ -8,7 +8,7 @@ interface NoteEditorProps {
 }
 
 export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorProps) {
-  const { notes, addNote, editNote } = useNotes();
+  const { notes, createNote, updateNote } = useNotes();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [saving, setSaving] = useState(false);
@@ -28,21 +28,20 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
 
   const handleSave = async () => {
     if (!title.trim()) {
-      alert('제목을 입력해주세요');
+      console.error('제목을 입력해주세요');
       return;
     }
 
     setSaving(true);
     try {
       if (isCreating) {
-        await addNote(title, content);
+        await createNote(title, content);
       } else if (selectedNoteId) {
-        await editNote(selectedNoteId, { title, content });
+        await updateNote(selectedNoteId, { title, content });
       }
       onDone();
     } catch (e) {
-      console.error(e);
-      alert('저장에 실패했습니다');
+      console.error('저장에 실패했습니다', e);
     } finally {
       setSaving(false);
     }
