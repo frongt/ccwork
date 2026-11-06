@@ -100,6 +100,5 @@ git 훅에서 오류가 났을 경우 직접 수정해서 commit 또는 push를 
 
 ### 커밋 메시지 규칙 (commitlint)
 
-- 형식: `type: 제목` (Conventional Commits, 한국어 제목). type은 `feat`/`fix`/`docs`/`chore`/`test`/`refactor`/`style`/`ci` 중에서만 허용(그 외 불가).
-- 제목(헤더 첫 줄 전체)은 50자 이하, 영문은 소문자, 끝에 마침표 금지.
-- 제목 필수, 본문 필수(빈 줄 제외 **최소 2줄**). `Co-Authored-By` 같은 푸터는 본문 줄 수에 포함되지 않는다.
+- 형식: `type: 제목`. type은 `feat`/`fix`/`docs`/`chore`/`test`/`refactor`/`style`/`ci` 중에서만 허용(그 외 불가).
+- 제목(헤더 첫 줄 전체)은 50자 이하, 영문은 소문자. 본문은 최소 10자 이상.
