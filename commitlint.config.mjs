@@ -16,8 +16,18 @@ export default {
     },
   ],
   rules: {
-    // 한국어 subject에는 대소문자 규칙이 의미 없음
-    'subject-case': [0],
+    // 허용 타입 엄격 제한
+    'type-enum': [
+      2,
+      'always',
+      ['feat', 'fix', 'docs', 'chore', 'test', 'refactor', 'style', 'ci'],
+    ],
+    // 제목(헤더) 50자 이하
+    'header-max-length': [2, 'always', 50],
+    // 제목 소문자 강제 (한국어는 영향 없음)
+    'subject-case': [2, 'always', 'lower-case'],
+    // 제목 마침표 금지
+    'subject-full-stop': [2, 'never', '.'],
     // 제목 필수
     'subject-empty': [2, 'never'],
     // 본문 필수 + 최소 두 줄
