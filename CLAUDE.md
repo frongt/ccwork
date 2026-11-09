@@ -92,10 +92,10 @@ src/
 
 ## 디자인 시스템
 
-**색, 타이포, 간격, 그림자, 컴포넌트 모양 등 모든 스타일 작업 전에 `docs/design-system/`을 먼저 참조한다.** 진입점은 `docs/design-system/README.md`이고, 반드시 `do-and-dont.md`의 Do / Don't를 지킨다.
+**색, 타이포, 간격, 그림자, 컴포넌트 모양 등 모든 스타일 작업 전에 `docs/design-system/`을 먼저 참조한다.** 진입점은 `docs/design-system/README.md`이고, 반드시 `rules/do-and-dont.md`의 Do / Don't를 지킨다.
 
 - 핵심 규칙: 구분선(1px 테두리) 금지 → 배경색 차이와 간격으로 구분, 순수 검정 금지, 액센트(`tertiary`)는 의도가 있는 액션에만, 폰트는 Inter(+Pretendard 폴백).
-- 기존 코드(`src/index.css`, `components/*`)는 아직 새 디자인 시스템으로 마이그레이션되지 않았다. 차이는 `docs/design-system/README.md`의 "현행 코드와의 차이" 표를 본다. 스타일을 수정하는 파일은 디자인 시스템 기준에 맞춘다.
+- 기존 코드(`src/index.css`, `components/*`)는 아직 새 디자인 시스템으로 마이그레이션되지 않았다. 차이는 `docs/design-system/migration.md`를 본다. 스타일을 수정하는 파일은 디자인 시스템 기준에 맞춘다.
 
 ## 테스트 설정
 
