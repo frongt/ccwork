@@ -92,10 +92,14 @@ src/
 
 ## 디자인 시스템
 
-**색, 타이포, 간격, 그림자, 컴포넌트 모양 등 모든 스타일 작업 전에 `docs/design-system/`을 먼저 참조한다.** 진입점은 `docs/design-system/README.md`이고, 반드시 `rules/do-and-dont.md`의 Do / Don't를 지킨다.
+**색, 타이포, 간격, 그림자, 컴포넌트 모양 등 모든 스타일 작업 전에 `docs/design-system/`을 먼저 참조한다.** 진입점은 `docs/design-system/README.md`이다. 아래 Do / Don't는 항상 지킨다.
 
-- 핵심 규칙: 구분선(1px 테두리) 금지 → 배경색 차이와 간격으로 구분, 순수 검정 금지, 액센트(`tertiary`)는 의도가 있는 액션에만, 폰트는 Inter(+Pretendard 폴백).
+@docs/design-system/rules/do-and-dont.md
+
+- 스타일 파일(`src/**/*.tsx`, `src/index.css`)을 수정할 때는 `.claude/rules/design-system.md`가 자동 로드된다. 필요한 문서만 골라 읽는 `design-system` skill도 쓸 수 있다.
+- 토큰 값(hex)의 원본은 `docs/design-system/foundations/tokens.json`이다. 값을 바꾸면 `src/index.css`와 Figma 변수를 수동으로 맞춘다.
 - 기존 코드(`src/index.css`, `components/*`)는 아직 새 디자인 시스템으로 마이그레이션되지 않았다. 차이는 `docs/design-system/migration.md`를 본다. 스타일을 수정하는 파일은 디자인 시스템 기준에 맞춘다.
+- 관리 구조(skill, subagent, hook 흐름)는 `docs/design-system/design-system-diagram.md`를 본다.
 
 ## 테스트 설정
 
@@ -108,4 +112,4 @@ git 훅에서 오류가 났을 경우 직접 수정해서 commit 또는 push를 
 ### 커밋 메시지 규칙 (commitlint)
 
 - 형식: `type: 제목`. type은 `feat`/`fix`/`docs`/`chore`/`test`/`refactor`/`style`/`ci` 중에서만 허용(그 외 불가).
-- 제목(헤더 첫 줄 전체)은 50자 이하, 영문은 소문자. 본문은 최소 10자 이상.
+- 제목(헤더 첫 줄 전체)은 50자 이하. 본문은 최소 10자 이상.
