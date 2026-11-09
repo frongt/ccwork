@@ -29,7 +29,8 @@ description: 노트 앱의 디자인 시스템(docs/design-system/) 중 작업�
 | NoteItem, NoteList          | `components/card-list.md`                          |
 | NoteEditor 폼, 입력창       | `components/input.md`                              |
 | 태그 칩                     | `components/tag-chip.md`                           |
-| Alert, Confirm, 모달        | `components/dialog.md`                             |
+| Alert, Confirm 상태 색      | `components/alert-confirm.md`                      |
+| 모달, 드롭다운              | `components/dialog.md`                             |
 | 현행 코드와의 차이          | `migration.md`                                     |
 
 ## 주의

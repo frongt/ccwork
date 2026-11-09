@@ -1,6 +1,7 @@
 # 다이얼로그 (Floating 요소)
 
-대상 컴포넌트: `Alert`, `Confirm` 등 모달과 드롭다운.
+대상 컴포넌트: 모달과 드롭다운 등 떠 있는 요소 전반.
+`Alert`, `Confirm`의 상태별 색과 구조는 [alert-confirm.md](./alert-confirm.md)를 따른다.
 
 [colors.md](../foundations/colors.md)의 Glass 규칙(`surface` 80% + blur 12px)과
 [elevation.md](../foundations/elevation.md)의 Ambient Shadow를 함께 적용한다.

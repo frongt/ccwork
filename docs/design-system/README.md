@@ -30,13 +30,14 @@ UI는 배움의 "조용한 순간"을 방해하지 않아야 한다.
 
 ### components (컴포넌트)
 
-| 문서                                                 | 내용                                    |
-| ---------------------------------------------------- | --------------------------------------- |
-| [components/button.md](./components/button.md)       | Primary / Secondary / Ghost 버튼        |
-| [components/card-list.md](./components/card-list.md) | 카드, 리스트, hover, 선택 상태          |
-| [components/input.md](./components/input.md)         | 입력창, 라벨                            |
-| [components/tag-chip.md](./components/tag-chip.md)   | Knowledge Token (태그 칩)               |
-| [components/dialog.md](./components/dialog.md)       | 모달, 드롭다운 (Glass + Ambient Shadow) |
+| 문서                                                         | 내용                                       |
+| ------------------------------------------------------------ | ------------------------------------------ |
+| [components/button.md](./components/button.md)               | Primary / Secondary / Ghost 버튼           |
+| [components/card-list.md](./components/card-list.md)         | 카드, 리스트, hover, 선택 상태             |
+| [components/input.md](./components/input.md)                 | 입력창, 라벨                               |
+| [components/tag-chip.md](./components/tag-chip.md)           | Knowledge Token (태그 칩)                  |
+| [components/dialog.md](./components/dialog.md)               | 모달, 드롭다운 (Glass + Ambient Shadow)    |
+| [components/alert-confirm.md](./components/alert-confirm.md) | Alert, Confirm의 상태별 헤더, 확인 버튼 색 |
 
 ### 규칙, 현황, 관리 구조
 

@@ -9,6 +9,7 @@ const RULES = [
   { re: /(?<![\w-])(?:text|bg|border)-black(?![\w-])/, msg: '순수 검정 금지. on-surface 계열 토큰 사용' },
   { re: /#000(?:000)?(?![0-9a-fA-F])/, msg: '순수 검정(#000) 금지. on-surface 계열 토큰 사용' },
   { re: /(?<![\w-])(?:text|bg|border)-gray-\d+/, msg: 'gray-* 금지. 시맨틱 토큰 사용' },
+  { re: /(?<![\w-])(?:text|bg|border)-(?:blue|green|amber|red)-\d+/, msg: 'Tailwind 기본 상태색 금지. status-* 토큰 사용' },
   { re: /(?<![\w-])shadow-(?:sm|md|lg|xl|2xl)(?![\w-])/, msg: '기본 그림자 금지. Ambient Shadow 사용' },
   { re: /rgba\(\s*0\s*,\s*0\s*,\s*0\s*,/, msg: '검정 기반 그림자 금지. Ambient Shadow 사용' },
   { re: /Boogaloo/, msg: '폰트는 Inter(+Pretendard 폴백)만 사용' },

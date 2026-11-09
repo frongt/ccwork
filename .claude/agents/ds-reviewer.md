@@ -13,6 +13,7 @@ tools: Read, Grep, Glob, Bash
 3. 대상 파일에서 아래를 찾는다.
    - 구분선: `border-b`, `border-r`, `border-t`, `border-l`, `divide-`, `h-px`
    - 순수 검정과 회색: `text-black`, `bg-black`, `#000`, `gray-`
+   - Tailwind 기본 상태색: `bg-blue-500`, `green-`, `amber-`, `red-` 등 (`status-*` 토큰을 써야 함)
    - 검정 기반 그림자: `shadow-md`, `shadow-lg`, `rgba(0,0,0`
    - 허용되지 않은 폰트: `Boogaloo` 등 Inter/Pretendard 외 폰트
    - hex 직접 사용: `#[0-9a-fA-F]{6}` (토큰 이름을 써야 함)

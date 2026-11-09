@@ -41,6 +41,21 @@ UI를 겹겹이 쌓인 물리적 재질로 본다. `surface-container` 단계를
 
 액센트는 **단 하나**이며 아껴서 쓴다. 의도가 있는 액션에만 사용한다.
 
+## 상태 색 (Status)
+
+Alert, Confirm처럼 **상태를 전달하는 UI**에만 쓰는 색이다. 액센트와 달리 상태마다 한 쌍(강한 색 + 연한 색)을 둔다.
+쓰는 방법은 [alert-confirm.md](../components/alert-confirm.md)를 본다.
+
+| 토큰                                                                                                      | 용도                                         |
+| --------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `status_info`                                                                                             | info 확인 버튼 배경. `tertiary`를 재사용한다 |
+| `status_success`, `status_warning`, `status_error`                                                        | 확인 버튼 배경. 글자는 `on_tertiary`         |
+| `status_info_container`, `status_success_container`, `status_warning_container`, `status_error_container` | 헤더 배경. 글자는 `on_surface`               |
+
+- 강한 색 위 글자(`on_tertiary`)는 대비 4.5 이상, 연한 색 위 글자(`on_surface`)는 대비 9 이상이다. 값을 바꿀 때도 이 기준을 지킨다.
+- 상태 색을 장식이나 일반 강조에 쓰지 않는다. 의미가 없는 곳에서는 액센트나 중립 토큰을 쓴다.
+- 기존 `destructive`는 `status_error`로 대체한다.
+
 ## The "Glass & Gradient" Rule
 
 - **Glassmorphism**: 떠 있는 요소(모달, 드롭다운, 떠 있는 breadcrumb)에 쓴다.
@@ -75,8 +90,13 @@ UI를 겹겹이 쌓인 물리적 재질로 본다. `surface-container` 단계를
 | `tertiary`                  | `tertiary`                  | `text-tertiary`                |
 | `tertiary_container`        | `tertiary-container`        | `to-tertiary-container`        |
 | `on_tertiary`               | `on-tertiary`               | `text-on-tertiary`             |
+| `status_info`               | `status-info`               | `bg-status-info`               |
+| `status_success`            | `status-success`            | `bg-status-success`            |
+| `status_warning`            | `status-warning`            | `bg-status-warning`            |
+| `status_error`              | `status-error`              | `bg-status-error`              |
+| `status_*_container`        | `status-*-container`        | `bg-status-error-container`    |
 
-기존 `--color-destructive`(삭제/오류)는 원문에 정의가 없으므로 그대로 유지한다.
+기존 `--color-destructive`(삭제/오류)는 `status-error`로 대체한다.
 
 ## 관련 문서
 

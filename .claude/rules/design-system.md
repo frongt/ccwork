@@ -18,7 +18,8 @@ UI 스타일을 만들거나 바꾸기 전에 필요한 문서만 읽는다. 전
 | NoteItem, NoteList          | `docs/design-system/components/card-list.md`              |
 | NoteEditor 폼               | `docs/design-system/components/input.md`                  |
 | 태그 칩                     | `docs/design-system/components/tag-chip.md`               |
-| Alert, Confirm, 모달        | `docs/design-system/components/dialog.md`                 |
+| Alert, Confirm 상태 색      | `docs/design-system/components/alert-confirm.md`          |
+| 모달, 드롭다운              | `docs/design-system/components/dialog.md`                 |
 
 - 색은 hex를 직접 쓰지 않고 토큰 이름(`bg-surface-container-low` 등)으로 쓴다.
 - 구분은 선이 아니라 배경색 차이와 간격으로 한다.
