@@ -17,6 +17,7 @@ tools: Read, Grep, Glob, Bash
    - 검정 기반 그림자: `shadow-md`, `shadow-lg`, `rgba(0,0,0`
    - 허용되지 않은 폰트: `Boogaloo` 등 Inter/Pretendard 외 폰트
    - hex 직접 사용: `#[0-9a-fA-F]{6}` (토큰 이름을 써야 함)
+   - `aria-label`이 없는 `input`, `textarea`, `select` (`type="hidden"` 제외). 태그가 여러 줄이므로 태그 전체를 확인한다.
    - 불필요한 이모지/아이콘
    - 카드와 입력창의 상시 테두리(`border border-*`) 중 Ghost Border(`outline-variant/15`)가 아닌 것
 4. 문서 규칙과 대조해 실제 위반만 남긴다. `migration.md`에 이미 기록된 항목은 "기존 항목"으로 표시한다.

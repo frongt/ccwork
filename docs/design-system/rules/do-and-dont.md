@@ -17,6 +17,7 @@
 - **DO** 접근성상 경계가 꼭 필요하면 Ghost Border(`outline_variant` 15%)를 쓴다.
 - **DO** 새 UI 문구는 한국어로 쓴다 (프로젝트 규칙).
 - **DO** 상태(info / success / warning / error)는 `status_*` 토큰으로 전달한다. 헤더는 연한 `status_*_container`, 확인 버튼은 강한 `status_*`를 쓴다.
+- **DO** 모든 입력 요소(`input`, `textarea`, `select`)에 `aria-label`을 붙인다. `type="hidden"`만 예외다.
 - **DO** 상태를 색만으로 구분하지 않는다. 제목 텍스트와 `role`(`alert` / `alertdialog`)로도 의미를 전달한다.
 
 ## Don't
@@ -30,6 +31,7 @@
 - **DON'T** 액센트 색을 장식용으로 남발하지 않는다.
 - **DON'T** 입력창 테두리를 항상 진하게 두지 않는다. 포커스 때만 `tertiary`로 바꾼다.
 - **DON'T** 폰트를 Inter(+Pretendard 폴백) 밖에서 고르지 않는다 (예: `Boogaloo`).
+- **DON'T** `placeholder`나 인접한 텍스트만으로 입력창의 레이블을 대신하지 않는다. `aria-label`이 필요하다.
 - **DON'T** 상태 색(`status_*`)을 상태 전달이 아닌 장식이나 일반 강조에 쓰지 않는다.
 - **DON'T** 상태 헤더를 `blue-500`, `green-500`, `amber-500`, `red-500` 같은 Tailwind 기본색과 흰 글자로 만들지 않는다. 대비가 부족하다.
 
