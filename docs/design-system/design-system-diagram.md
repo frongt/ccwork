@@ -19,9 +19,9 @@
 
 ### Figma (파일 키 `gSuq4RkhjHYaIdBYWy2rzH`)
 
-- 변수 컬렉션 3개: `Color`(12), `Spacing`(4), `Radius`(2). 값은 `tokens.json` 기준이고, 색은 WEB code syntax `var(--color-*)`를 지정했다.
-- 컴포넌트 3개: `Button`(Primary / Secondary / Ghost), `Tag Chip`, `Note Card`. 색, 모서리, 카드 간격은 변수에 바인딩했다.
-- 버튼의 좌우/상하 패딩(20/8px)은 대응하는 간격 토큰이 없어 고정값이다.
+- 변수 컬렉션 3개: `Color`(20), `Spacing`(4), `Radius`(2). 값은 `tokens.json` 기준이고, 색은 WEB code syntax `var(--color-*)`를 지정했다. `Color`에는 상태 토큰 8개(`status-*`)가 포함되며 `status-info`는 `tertiary`를 참조한다.
+- 컴포넌트 5개: `Button`(Primary / Secondary / Ghost), `Tag Chip`, `Note Card`, `Alert`(info / success / warning / error), `Confirm`(상태 4종). 색, 모서리, 카드 간격은 변수에 바인딩했다. Confirm의 취소 버튼은 `Button`의 Secondary 인스턴스다.
+- 버튼의 좌우/상하 패딩(20/8px)과 Alert/Confirm의 내부 패딩(16px)은 대응하는 간격 토큰이 없어 고정값이다.
 - 값을 바꾸면 `tokens.json` → Figma 변수 → `src/index.css` 순서로 수동 반영한다. 대조는 `get_variable_defs`로 한다.
 
 이 문서에서 "토큰"은 AI 컨텍스트 단위가 아니라 **디자인 토큰**(값에 붙인 이름. 예: `tertiary` = `#0053dc`)을 뜻한다.
