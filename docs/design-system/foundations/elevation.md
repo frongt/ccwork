@@ -2,8 +2,8 @@
 
 ## The Layering Principle
 
-일반 카드에는 그림자를 쓰지 않는다. `surface_container`(#eaeff1) 섹션 위에
-`surface_container_lowest`(#ffffff) 카드를 올려 **Tonal Layering**으로 "부드러운 들림"을 만든다.
+일반 카드에는 그림자를 쓰지 않는다. `surface_container` 섹션 위에
+`surface_container_lowest` 카드를 올려 **Tonal Layering**으로 "부드러운 들림"을 만든다.
 자연스러운 종이 겹침을 흉내 낸 방식이다.
 
 ```html
@@ -19,7 +19,7 @@
 | 속성   | 값                                                 |
 | ------ | -------------------------------------------------- |
 | Blur   | 24px ~ 40px                                        |
-| 투명도 | `on_surface`(#2b3437)의 6%                         |
+| 투명도 | `on_surface`의 6%                                  |
 | 색     | 액센트 색을 살짝 섞어 팔레트와 어우러지게 틴트한다 |
 
 ```html
@@ -32,7 +32,7 @@
 
 접근성 때문에 비슷한 배경 사이에서 컨테이너를 꼭 구분해야 할 때만 쓴다.
 
-- 토큰: `outline_variant`(#abb3b7)의 **15% 투명도**, 두께 1px.
+- 토큰: `outline_variant`의 **15% 투명도**, 두께 1px.
 - 선이 아니라 "선의 암시"여야 한다.
 
 ```html

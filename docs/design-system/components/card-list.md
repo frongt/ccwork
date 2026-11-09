@@ -4,8 +4,8 @@
 
 - **The Divider Prohibition**: 리스트 항목을 선으로 구분하지 않는다. **간격**으로 구분한다.
   항목 사이 표준 간격은 `spacing.4`(1.4rem).
-- **Hover**: 배경을 `surface`에서 `surface_container_low`(#f1f4f6)로 바꾼다.
-- **선택됨**: 사이드바의 선택 상태는 `surface_container_highest`(#dbe4e7).
+- **Hover**: 배경을 `surface`에서 `surface_container_low`로 바꾼다.
+- **선택됨**: 사이드바의 선택 상태는 `surface_container_highest`.
 
 ```html
 <ul class="flex flex-col gap-[1.4rem]">

@@ -1,10 +1,10 @@
 # 버튼
 
-| 종류             | 스타일                                                                                             |
-| ---------------- | -------------------------------------------------------------------------------------------------- |
-| Primary          | `tertiary` → `tertiary_container` 그라데이션, 텍스트 `on_tertiary`(#faf8ff), 모서리 `md`(0.375rem) |
-| Secondary        | 배경 `surface_container_high`(#e2e9ec), 텍스트 `on_surface`, 테두리 없음                           |
-| Tertiary (Ghost) | 배경 없음, 텍스트 `tertiary`(#0053dc). hover 시 액센트색 2% 불투명도 배경                          |
+| 종류             | 스타일                                                                                    |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| Primary          | `tertiary` → `tertiary_container` 그라데이션, 텍스트 `on_tertiary`, 모서리 `md`(0.375rem) |
+| Secondary        | 배경 `surface_container_high`, 텍스트 `on_surface`, 테두리 없음                           |
+| Tertiary (Ghost) | 배경 없음, 텍스트 `tertiary`. hover 시 액센트색 2% 불투명도 배경                          |
 
 ```html
 <!-- Primary -->
