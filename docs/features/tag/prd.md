@@ -1,6 +1,6 @@
-# 태그 기능 PRD (뼈대)
+# 태그 기능 PRD
 
-> 기준 문서: [`spec-fixed.md`](./spec-fixed.md) (확정본). 이 문서는 기능 정의서를 바탕으로 한 PRD 뼈대이며, 4번(기술 결정)은 다음 세션에서 논의해 채운다.
+> 기준 문서: [`spec-fixed.md`](./spec-fixed.md) (확정본).
 
 ## 1. 컴포넌트 개요 (요약과 배경)
 
@@ -84,7 +84,7 @@
   | 상태    | `src/hooks/useTagEditor.ts` (신규)                             | `tags`, `isInputOpen`, `inputValue`, `errorMessage` 상태와 `toggleInput`, `changeInput`, `addTag`(Enter), `removeTag`, `reset(initialTags)` 동작을 캡슐화 |
   | 표현    | `src/components/Tag.tsx`, `TagInput.tsx`, `TagList.tsx` (신규) | props만 받는 순수 표현 컴포넌트. `Tag`는 정의서 명세(`TagProps`, `onDelete`, `truncate`, `title`) 그대로                                                  |
   | 조립    | `src/components/NoteEditor.tsx`                                | `useTagEditor`를 호출해 `TagInput`/`TagList`를 배치하고, 저장 시 `title`, `content`, `tags`를 함께 전달. 노트 전환 시 기존 `useEffect`에서 `reset` 호출   |
-  | 표시    | `src/components/NoteItem.tsx`                                  | `note.tags ?? []`의 길이로 아이콘과 개수 표시                                                                                                             |
+  | 표시    | `src/components/NoteItem.tsx`                                  | `note.tags ?? []`의 길이로 "태그 N" 텍스트 표시                                                                                                           |
   - 구현 순서는 정의서의 "타입 → API → Context → 컴포넌트"를 유지하되, 4~5단계를 `utils/tags.ts` → `Tag` → `TagInput`/`TagList` → `useTagEditor` → `NoteEditor`로 쪼갠다.
   - 서버 저장은 기존 패턴대로 저장 버튼에서만 하고, 응답 후 Context 배열을 갱신한다(재조회 없음).
 
@@ -97,7 +97,7 @@
   - (+) 규칙(길이, 개수) 변경이 `utils/tags.ts` 한 곳에서 끝나고, 이후 필터/자동완성은 `notes`에서 파생해 붙일 수 있다.
   - (+) 데이터·API·Context 변경은 A안과 같아서 `db.json` 호환(`note.tags ?? []`)과 정의서 확정 사항을 그대로 지킨다.
   - (−) `src/utils/`, `src/hooks/`라는 새 디렉터리와 커스텀 훅 패턴이 생긴다. `CLAUDE.md` 아키텍처 섹션과 `spec-fixed.md` 구현 순서에 반영해야 한다.
-  - (−) 파일 수가 늘어(신규 6개) 이번 규모에서는 구조가 다소 무겁다.
+  - (−) 파일 수가 늘어(신규 5개) 이번 규모에서는 구조가 다소 무겁다.
   - (−) 태그 이름 변경처럼 모든 노트를 순회해야 하는 기능은 이 구조에서도 쉽지 않다. 필요해지면 C안으로의 전환을 새 ADR로 다룬다.
 
 ### ADR-002: 컴포넌트 개발 원칙 — 상태 / 훅 / 구조 분리
@@ -158,7 +158,7 @@
 ### UI
 
 - 터치 기기에서 삭제 버튼 항상 표시 (이번에는 hover/focus 시에만 표시)
-- NoteItem에서 태그 이름 직접 표시 (아이콘과 개수만 표시)
+- NoteItem에서 태그 이름 직접 표시 ("태그 N" 개수 텍스트만 표시)
 - 편집 중 미저장 태그 개수를 NoteItem에 실시간 반영 (서버 저장값 기준)
 - 모바일/반응형 전용 레이아웃 최적화
 - 다크 모드 등 테마별 별도 태그 스타일
@@ -175,24 +175,24 @@
 
 - 태그 내보내기/가져오기
 - 태그 변경 이력 관리
-- 접근성 고도화 (삭제 버튼 `aria-label` 및 키보드 포커스 표시 이외의 스크린리더 안내 개선)
+- 접근성 고도화 (삭제 버튼 `aria-label`, 태그 입력창 `aria-label`, 키보드 포커스 표시 이외의 스크린리더 안내 개선)
 - 다국어 지원 (UI 문구는 한국어로 통일)
 
 ## 6. 용어 정의
 
-| 용어                      | 정의                                                                                                        |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| 태그 (Tag)                | 노트에 붙이는 문자열 라벨. 노트의 `tags: string[]`에 추가한 순서대로 저장한다.                              |
-| `Tag` 컴포넌트            | 태그 하나를 표시하는 순수 표현 컴포넌트(`src/components/Tag.tsx`). 아이콘, 라벨, 삭제 버튼으로 구성한다.    |
-| `TagProps`                | `Tag` 컴포넌트의 props 인터페이스.                                                                          |
-| NoteEditor                | 노트 상세/편집 화면(메인 영역). 제목/내용/태그를 편집하고 생성·수정을 겸한다.                               |
-| NoteItem                  | 왼쪽 노트 목록의 카드 컴포넌트. 태그가 있으면 아이콘과 개수를 표시한다.                                     |
-| "태그 추가" / "닫기" 버튼 | 태그 입력창을 열고 닫는 토글 버튼. 입력창이 열리면 "닫기"로 바뀐다.                                         |
-| 태그 입력창               | Enter로 태그를 한 개씩 추가하는 입력 필드. 추가 후에도 열린 상태를 유지한다.                                |
-| 로컬 `tags` state         | NoteEditor가 가진 편집 중 태그 배열. "저장" 전까지 서버에 반영되지 않는다.                                  |
-| 중복 판정                 | trim 후 대소문자를 무시하고 비교한다. 저장은 처음 입력한 표기 그대로 한다.                                  |
-| trim                      | 입력값 앞뒤 공백 제거.                                                                                      |
-| 옵셔널 필드               | `tags?`처럼 없을 수도 있는 필드. 기존 노트는 `note.tags ?? []`로 처리한다.                                  |
-| 노트 전환                 | `selectedNoteId` 또는 `isCreating`이 바뀌는 것. 이때 `title`, `content`, `tags`와 입력창 상태가 리셋된다.   |
-| ADR                       | Architecture Decision Record. Context / Decision / Alternatives / Consequences로 기술 결정을 기록하는 형식. |
-| PRD                       | Product Requirements Document. 기능의 배경, 사용자, 요구사항, 범위를 정리한 문서.                           |
+| 용어                      | 정의                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| 태그 (Tag)                | 노트에 붙이는 문자열 라벨. 노트의 `tags: string[]`에 추가한 순서대로 저장한다.                                |
+| `Tag` 컴포넌트            | 태그 하나를 표시하는 순수 표현 컴포넌트(`src/components/Tag.tsx`). 라벨, 삭제 버튼으로 구성한다(아이콘 없음). |
+| `TagProps`                | `Tag` 컴포넌트의 props 인터페이스.                                                                            |
+| NoteEditor                | 노트 상세/편집 화면(메인 영역). 제목/내용/태그를 편집하고 생성·수정을 겸한다.                                 |
+| NoteItem                  | 왼쪽 노트 목록의 카드 컴포넌트. 태그가 있으면 "태그 N" 텍스트로 개수를 표시한다.                              |
+| "태그 추가" / "닫기" 버튼 | 태그 입력창을 열고 닫는 토글 버튼. 입력창이 열리면 "닫기"로 바뀐다.                                           |
+| 태그 입력창               | Enter로 태그를 한 개씩 추가하는 입력 필드. 추가 후에도 열린 상태를 유지한다.                                  |
+| 로컬 `tags` state         | NoteEditor가 가진 편집 중 태그 배열. "저장" 전까지 서버에 반영되지 않는다.                                    |
+| 중복 판정                 | trim 후 대소문자를 무시하고 비교한다. 저장은 처음 입력한 표기 그대로 한다.                                    |
+| trim                      | 입력값 앞뒤 공백 제거.                                                                                        |
+| 옵셔널 필드               | `tags?`처럼 없을 수도 있는 필드. 기존 노트는 `note.tags ?? []`로 처리한다.                                    |
+| 노트 전환                 | `selectedNoteId` 또는 `isCreating`이 바뀌는 것. 이때 `title`, `content`, `tags`와 입력창 상태가 리셋된다.     |
+| ADR                       | Architecture Decision Record. Context / Decision / Alternatives / Consequences로 기술 결정을 기록하는 형식.   |
+| PRD                       | Product Requirements Document. 기능의 배경, 사용자, 요구사항, 범위를 정리한 문서.                             |
