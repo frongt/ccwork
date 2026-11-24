@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { validateTag } from '../utils/tags';
+
 export interface UseTagEditorResult {
   tags: string[];
   isInputOpen: boolean;
@@ -9,5 +12,26 @@ export interface UseTagEditorResult {
 }
 
 export function useTagEditor(): UseTagEditorResult {
-  throw new Error('not implemented');
+  const [tags, setTags] = useState<string[]>([]);
+  const [isInputOpen, setIsInputOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const toggleInput = () => setIsInputOpen((prev) => !prev);
+
+  const changeInput = (value: string) => setInputValue(value);
+
+  const addTag = () => {
+    const result = validateTag(inputValue, tags);
+    if (!result.canAdd) return;
+    setTags([...tags, result.tag]);
+    setInputValue('');
+  };
+
+  const reset = (initialTags: string[]) => {
+    setTags([...initialTags]);
+    setIsInputOpen(false);
+    setInputValue('');
+  };
+
+  return { tags, isInputOpen, inputValue, toggleInput, changeInput, addTag, reset };
 }

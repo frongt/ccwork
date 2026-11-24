@@ -5,6 +5,7 @@ export interface TagValidationResult {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function validateTag(_input: string, _existing: string[]): TagValidationResult {
-  throw new Error('not implemented');
+export function validateTag(input: string, _existing: string[]): TagValidationResult {
+  const tag = input.trim();
+  return { canAdd: tag !== '', tag, message: null };
 }

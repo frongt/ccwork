@@ -63,72 +63,72 @@ export interface UseTagEditorResult {
 
 **정상**
 
-- T1 `[정상] Tag — should label 텍스트를 표시 when label이 'react'`
-- T2 `[정상] Tag — should 삭제 버튼을 DOM에 렌더 when 항상 (표시 여부와 무관)`
-- T3 `[정상] Tag — should 삭제 버튼에 aria-label "react 태그 삭제"를 가짐 when label이 'react'`
-- T4 `[정상] Tag — should onDelete를 한 번 호출 when 삭제 버튼을 클릭`
-- T5 `[정상] Tag — should 삭제 버튼이 평소 투명하고 group-hover·focus 때 보이는 클래스를 가짐 when 렌더`
-- T6 `[정상] Tag — should title 속성에 전체 label을 가짐 when 렌더`
-- T7 `[정상] Tag — should 최대 너비 제한 클래스와 라벨에 truncate 클래스를 가짐 when 렌더`
+- [ ] T1 `[정상] Tag — should label 텍스트를 표시 when label이 'react'`
+- [ ] T2 `[정상] Tag — should 삭제 버튼을 DOM에 렌더 when 항상 (표시 여부와 무관)`
+- [ ] T3 `[정상] Tag — should 삭제 버튼에 aria-label "react 태그 삭제"를 가짐 when label이 'react'`
+- [ ] T4 `[정상] Tag — should onDelete를 한 번 호출 when 삭제 버튼을 클릭`
+- [ ] T5 `[정상] Tag — should 삭제 버튼이 평소 투명하고 group-hover·focus 때 보이는 클래스를 가짐 when 렌더`
+- [ ] T6 `[정상] Tag — should title 속성에 전체 label을 가짐 when 렌더`
+- [ ] T7 `[정상] Tag — should 최대 너비 제한 클래스와 라벨에 truncate 클래스를 가짐 when 렌더`
 
 **경계**
 
-- T8 `[경계] Tag — should 라벨이 50자여도 삭제 버튼이 라벨 밖 영역에 렌더되어 잘리지 않음 when label이 50자 문자열 (라벨만 truncate, 버튼은 shrink-0)`
-- T9 `[경계] Tag — should 클릭해도 onDelete 외의 동작을 하지 않음 when 라벨 영역을 클릭`
+- [ ] T8 `[경계] Tag — should 라벨이 50자여도 삭제 버튼이 라벨 밖 영역에 렌더되어 잘리지 않음 when label이 50자 문자열 (라벨만 truncate, 버튼은 shrink-0)`
+- [ ] T9 `[경계] Tag — should 클릭해도 onDelete 외의 동작을 하지 않음 when 라벨 영역을 클릭`
 
 ### TagList (props 기반 컴포넌트)
 
 **정상**
 
-- TL1 `[정상] TagList — should 각 태그에 삭제 버튼을 표시 when tags가 ['react', 'design']`
-- TL2 `[정상] TagList — should onDelete에 해당 태그의 인덱스를 전달 when 두 번째 태그의 삭제 버튼을 클릭 (1)`
-- TL3 `[정상] TagList — should flex-wrap 컨테이너 안에 표시 when 50자 태그가 여러 개 (가로 스크롤 유발 클래스 없음)`
+- [ ] TL1 `[정상] TagList — should 각 태그에 삭제 버튼을 표시 when tags가 ['react', 'design']`
+- [ ] TL2 `[정상] TagList — should onDelete에 해당 태그의 인덱스를 전달 when 두 번째 태그의 삭제 버튼을 클릭 (1)`
+- [ ] TL3 `[정상] TagList — should flex-wrap 컨테이너 안에 표시 when 50자 태그가 여러 개 (가로 스크롤 유발 클래스 없음)`
 
 **경계**
 
-- TL4 `[경계] TagList — should 아무것도 렌더하지 않음 when tags가 빈 배열 (모두 삭제된 상태)`
-- TL5 `[경계] TagList — should 중복 태그도 각자 자기 인덱스를 전달 when tags가 ['a', 'a']에서 두 번째 삭제`
+- [ ] TL4 `[경계] TagList — should 아무것도 렌더하지 않음 when tags가 빈 배열 (모두 삭제된 상태)`
+- [ ] TL5 `[경계] TagList — should 중복 태그도 각자 자기 인덱스를 전달 when tags가 ['a', 'a']에서 두 번째 삭제`
 
 ### useTagEditor (renderHook)
 
 **정상**
 
-- H1 `[정상] removeTag — should 해당 인덱스의 태그만 제거 when tags가 ['a', 'b', 'c']에서 1을 전달`
-- H2 `[정상] removeTag — should 나머지 태그의 순서를 유지 when 중간 태그를 제거`
-- H3 `[정상] removeTag — should isInputOpen과 inputValue를 바꾸지 않음 when 입력 중에 태그를 제거`
+- [ ] H1 `[정상] removeTag — should 해당 인덱스의 태그만 제거 when tags가 ['a', 'b', 'c']에서 1을 전달`
+- [ ] H2 `[정상] removeTag — should 나머지 태그의 순서를 유지 when 중간 태그를 제거`
+- [ ] H3 `[정상] removeTag — should isInputOpen과 inputValue를 바꾸지 않음 when 입력 중에 태그를 제거`
 
 **경계**
 
-- H4 `[경계] removeTag — should 첫 번째 태그만 제거 when 인덱스 0`
-- H5 `[경계] removeTag — should 마지막 태그만 제거 when 인덱스 tags.length-1`
-- H6 `[경계] removeTag — should tags가 [] when 하나뿐인 태그를 제거`
-- H7 `[경계] removeTag — should 같은 위치의 태그 하나만 제거 when 중복 태그 ['a', 'a']에서 0을 전달`
-- H8 `[경계] removeTag — should reset에 전달한 initialTags 배열을 변경하지 않음 when reset 후 태그를 제거`
+- [ ] H4 `[경계] removeTag — should 첫 번째 태그만 제거 when 인덱스 0`
+- [ ] H5 `[경계] removeTag — should 마지막 태그만 제거 when 인덱스 tags.length-1`
+- [ ] H6 `[경계] removeTag — should tags가 [] when 하나뿐인 태그를 제거`
+- [ ] H7 `[경계] removeTag — should 같은 위치의 태그 하나만 제거 when 중복 태그 ['a', 'a']에서 0을 전달`
+- [ ] H8 `[경계] removeTag — should reset에 전달한 initialTags 배열을 변경하지 않음 when reset 후 태그를 제거`
 
 **예외**
 
-- H9 `[예외] removeTag — should 던지지 않고 tags를 바꾸지 않음 when 인덱스가 tags.length 이상`
-- H10 `[예외] removeTag — should 던지지 않고 tags를 바꾸지 않음 when 인덱스가 음수`
+- [ ] H9 `[예외] removeTag — should 던지지 않고 tags를 바꾸지 않음 when 인덱스가 tags.length 이상`
+- [ ] H10 `[예외] removeTag — should 던지지 않고 tags를 바꾸지 않음 when 인덱스가 음수`
 
 ### NoteEditor (통합: api mock 또는 NotesProvider)
 
 **정상**
 
-- E1 `[정상] NoteEditor — should 클릭한 태그가 목록에서 즉시 사라지고 나머지는 남음 when 태그가 있는 노트에서 삭제 버튼을 클릭`
-- E2 `[정상] NoteEditor — should updateNote를 삭제된 tags를 포함한 { title, content, tags }로 호출 when 태그를 삭제하고 "저장"을 클릭`
-- E3 `[정상] NoteEditor — should 삭제 시점에는 updateNote를 호출하지 않음 when 삭제 버튼만 클릭 (저장 전 서버 미반영)`
-- E4 `[정상] NoteEditor — should 삭제가 버려지고 원래 태그가 표시되며 확인창이 뜨지 않음 when 태그를 삭제한 뒤 저장하지 않고 다른 노트로 갔다가 돌아옴`
-- E5 `[정상] NoteEditor — should 저장한 삭제 결과를 표시 when 저장 후 다른 노트를 거쳐 다시 선택`
-- E6 `[정상] NoteEditor — should 방금 추가한 태그도 삭제 가능 when 입력창에서 추가한 태그의 삭제 버튼을 클릭`
+- [ ] E1 `[정상] NoteEditor — should 클릭한 태그가 목록에서 즉시 사라지고 나머지는 남음 when 태그가 있는 노트에서 삭제 버튼을 클릭`
+- [ ] E2 `[정상] NoteEditor — should updateNote를 삭제된 tags를 포함한 { title, content, tags }로 호출 when 태그를 삭제하고 "저장"을 클릭`
+- [ ] E3 `[정상] NoteEditor — should 삭제 시점에는 updateNote를 호출하지 않음 when 삭제 버튼만 클릭 (저장 전 서버 미반영)`
+- [ ] E4 `[정상] NoteEditor — should 삭제가 버려지고 원래 태그가 표시되며 확인창이 뜨지 않음 when 태그를 삭제한 뒤 저장하지 않고 다른 노트로 갔다가 돌아옴`
+- [ ] E5 `[정상] NoteEditor — should 저장한 삭제 결과를 표시 when 저장 후 다른 노트를 거쳐 다시 선택`
+- [ ] E6 `[정상] NoteEditor — should 방금 추가한 태그도 삭제 가능 when 입력창에서 추가한 태그의 삭제 버튼을 클릭`
 
 **경계**
 
-- E7 `[경계] NoteEditor — should 태그 목록 영역에 아무것도 표시하지 않음 when 모든 태그를 삭제`
-- E8 `[경계] NoteEditor — should tags: []로 updateNote를 호출 when 모든 태그를 삭제하고 저장`
+- [ ] E7 `[경계] NoteEditor — should 태그 목록 영역에 아무것도 표시하지 않음 when 모든 태그를 삭제`
+- [ ] E8 `[경계] NoteEditor — should tags: []로 updateNote를 호출 when 모든 태그를 삭제하고 저장`
 
 **예외**
 
-- E9 `[예외] NoteEditor — should 삭제된 상태의 tags를 유지하고 onDone을 호출하지 않음 when 삭제 후 저장 중 updateNote가 reject`
+- [ ] E9 `[예외] NoteEditor — should 삭제된 상태의 tags를 유지하고 onDone을 호출하지 않음 when 삭제 후 저장 중 updateNote가 reject`
 
 ## AC 커버리지
 

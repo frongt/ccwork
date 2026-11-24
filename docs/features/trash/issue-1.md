@@ -102,46 +102,46 @@ interface NoteListProps {
 
 ### 정상
 
-1. [정상] partitionNotes — should `activeNotes`에는 deletedAt이 없는 노트를, `trashedNotes`에는 deletedAt이 있는 노트를 담아 반환 when 두 종류가 섞인 배열
-2. [정상] partitionNotes — should 각 그룹에서 입력 순서를 유지 when 여러 노트가 섞여 있음
-3. [정상] sortByDeletedAt — should 최근 삭제 순(deletedAt 내림차순)으로 정렬해 반환 when deletedAt이 서로 다른 노트 여러 개
-4. [정상] trashNote — should `PATCH`로 현재 일시의 `deletedAt`을 보내고 해당 노트를 `notes`에서 제거 when 서버가 성공 응답
-5. [정상] trashNote — should 해당 노트를 `trashedNotes`에 포함 when 서버가 성공 응답
-6. [정상] NotesContext — should `trashedNotes`를 최근 삭제 순으로 노출 when 삭제일이 다른 휴지통 노트가 여럿 있음
-7. [정상] useConfirmAction — should `pending`에 대상을 담아 Confirm 열림 상태가 됨 when `request(target)` 호출
-8. [정상] useConfirmAction — should `action`을 대상과 함께 호출하고 `pending`을 null로 닫음 when `confirm()` 호출
-9. [정상] useConfirmAction — should `action` 호출 없이 `pending`을 null로 닫음 when `cancel()` 호출
-10. [정상] NoteList — should `Confirm`을 표시하고 노트는 그대로 둠 when 삭제 버튼 클릭
-11. [정상] NoteList — should `trashNote`를 해당 id로 호출 when `Confirm`에서 확인 클릭
-12. [정상] NoteList — should 서버 호출 없이 `Confirm`을 닫고 노트가 남음 when `Confirm`에서 취소 클릭
-13. [정상] NoteList — should 서버 호출 없이 `Confirm`을 닫음 when `Confirm`의 닫기(×) 클릭
-14. [정상] NoteList — should `onTrashed(id)`를 호출 when 삭제가 성공
-15. [정상] App — should 선택 상태를 해제(에디터가 비어 있는 상태) when 선택 중인 노트를 삭제
-16. [정상] SidebarFooter — should `onOpenTrash`를 호출 when `aria-label="휴지통"` 버튼 클릭
-17. [정상] App — should 사이드바가 휴지통 목록으로 전환되고 일반 목록으로 돌아가는 버튼이 보임 when 휴지통 버튼 클릭
-18. [정상] TrashList — should 삭제된 노트를 전달받은 순서(최근 삭제 순)대로 표시 when 휴지통 노트가 여러 개
-19. [정상] TrashList — should 수정일 대신 삭제일(`toLocaleDateString('ko-KR')`)을 표시 when 휴지통 노트가 있음
-20. [정상] TrashList — should `onBack`을 호출 when 돌아가기 버튼 클릭
+- [ ] 1 [정상] partitionNotes — should `activeNotes`에는 deletedAt이 없는 노트를, `trashedNotes`에는 deletedAt이 있는 노트를 담아 반환 when 두 종류가 섞인 배열
+- [ ] 2 [정상] partitionNotes — should 각 그룹에서 입력 순서를 유지 when 여러 노트가 섞여 있음
+- [ ] 3 [정상] sortByDeletedAt — should 최근 삭제 순(deletedAt 내림차순)으로 정렬해 반환 when deletedAt이 서로 다른 노트 여러 개
+- [ ] 4 [정상] trashNote — should `PATCH`로 현재 일시의 `deletedAt`을 보내고 해당 노트를 `notes`에서 제거 when 서버가 성공 응답
+- [ ] 5 [정상] trashNote — should 해당 노트를 `trashedNotes`에 포함 when 서버가 성공 응답
+- [ ] 6 [정상] NotesContext — should `trashedNotes`를 최근 삭제 순으로 노출 when 삭제일이 다른 휴지통 노트가 여럿 있음
+- [ ] 7 [정상] useConfirmAction — should `pending`에 대상을 담아 Confirm 열림 상태가 됨 when `request(target)` 호출
+- [ ] 8 [정상] useConfirmAction — should `action`을 대상과 함께 호출하고 `pending`을 null로 닫음 when `confirm()` 호출
+- [ ] 9 [정상] useConfirmAction — should `action` 호출 없이 `pending`을 null로 닫음 when `cancel()` 호출
+- [ ] 10 [정상] NoteList — should `Confirm`을 표시하고 노트는 그대로 둠 when 삭제 버튼 클릭
+- [ ] 11 [정상] NoteList — should `trashNote`를 해당 id로 호출 when `Confirm`에서 확인 클릭
+- [ ] 12 [정상] NoteList — should 서버 호출 없이 `Confirm`을 닫고 노트가 남음 when `Confirm`에서 취소 클릭
+- [ ] 13 [정상] NoteList — should 서버 호출 없이 `Confirm`을 닫음 when `Confirm`의 닫기(×) 클릭
+- [ ] 14 [정상] NoteList — should `onTrashed(id)`를 호출 when 삭제가 성공
+- [ ] 15 [정상] App — should 선택 상태를 해제(에디터가 비어 있는 상태) when 선택 중인 노트를 삭제
+- [ ] 16 [정상] SidebarFooter — should `onOpenTrash`를 호출 when `aria-label="휴지통"` 버튼 클릭
+- [ ] 17 [정상] App — should 사이드바가 휴지통 목록으로 전환되고 일반 목록으로 돌아가는 버튼이 보임 when 휴지통 버튼 클릭
+- [ ] 18 [정상] TrashList — should 삭제된 노트를 전달받은 순서(최근 삭제 순)대로 표시 when 휴지통 노트가 여러 개
+- [ ] 19 [정상] TrashList — should 수정일 대신 삭제일(`toLocaleDateString('ko-KR')`)을 표시 when 휴지통 노트가 있음
+- [ ] 20 [정상] TrashList — should `onBack`을 호출 when 돌아가기 버튼 클릭
 
 ### 경계
 
-21. [경계] partitionNotes — should 해당 노트를 `activeNotes`에 포함 when `deletedAt` 필드가 없는 기존 노트
-22. [경계] partitionNotes — should 해당 노트를 `activeNotes`에 포함 when `deletedAt`이 `null`
-23. [경계] partitionNotes — should 두 그룹 모두 빈 배열을 반환 when 빈 배열 입력
-24. [경계] partitionNotes — should 입력 배열과 노트 객체를 변경하지 않음 when 호출 후
-25. [경계] sortByDeletedAt — should 빈 배열을 반환 when 빈 배열 입력
-26. [경계] sortByDeletedAt — should 입력 배열의 순서를 바꾸지 않고 새 배열을 반환 when 호출 후
-27. [경계] NotesContext — should 모든 노트를 `notes`에 표시하고 에러가 나지 않음 when 서버 데이터가 전부 `deletedAt` 없음
-28. [경계] NotesContext — should 삭제된 노트를 `notes`에서 제외 when 초기 로딩 데이터에 `deletedAt`이 있는 노트가 섞여 있음
-29. [경계] TrashList — should 빈 상태 한국어 문구를 표시 when `notes`가 빈 배열
-30. [경계] App — should 선택 상태를 유지 when 선택 중이 아닌 다른 노트를 삭제
+- [ ] 21 [경계] partitionNotes — should 해당 노트를 `activeNotes`에 포함 when `deletedAt` 필드가 없는 기존 노트
+- [ ] 22 [경계] partitionNotes — should 해당 노트를 `activeNotes`에 포함 when `deletedAt`이 `null`
+- [ ] 23 [경계] partitionNotes — should 두 그룹 모두 빈 배열을 반환 when 빈 배열 입력
+- [ ] 24 [경계] partitionNotes — should 입력 배열과 노트 객체를 변경하지 않음 when 호출 후
+- [ ] 25 [경계] sortByDeletedAt — should 빈 배열을 반환 when 빈 배열 입력
+- [ ] 26 [경계] sortByDeletedAt — should 입력 배열의 순서를 바꾸지 않고 새 배열을 반환 when 호출 후
+- [ ] 27 [경계] NotesContext — should 모든 노트를 `notes`에 표시하고 에러가 나지 않음 when 서버 데이터가 전부 `deletedAt` 없음
+- [ ] 28 [경계] NotesContext — should 삭제된 노트를 `notes`에서 제외 when 초기 로딩 데이터에 `deletedAt`이 있는 노트가 섞여 있음
+- [ ] 29 [경계] TrashList — should 빈 상태 한국어 문구를 표시 when `notes`가 빈 배열
+- [ ] 30 [경계] App — should 선택 상태를 유지 when 선택 중이 아닌 다른 노트를 삭제
 
 ### 예외
 
-31. [예외] trashNote — should reject하고 `notes`를 바꾸지 않음 when 서버가 `!res.ok` 응답
-32. [예외] NoteList — should `alert`로 실패를 알리고 노트가 일반 목록에 남음 when `trashNote`가 reject
-33. [예외] NoteList — should `onTrashed`를 호출하지 않음 when `trashNote`가 reject
-34. [예외] useConfirmAction — should 에러를 호출자에게 전파하고 `pending`을 null로 닫음 when `action`이 reject
+- [ ] 31 [예외] trashNote — should reject하고 `notes`를 바꾸지 않음 when 서버가 `!res.ok` 응답
+- [ ] 32 [예외] NoteList — should `alert`로 실패를 알리고 노트가 일반 목록에 남음 when `trashNote`가 reject
+- [ ] 33 [예외] NoteList — should `onTrashed`를 호출하지 않음 when `trashNote`가 reject
+- [ ] 34 [예외] useConfirmAction — should 에러를 호출자에게 전파하고 `pending`을 null로 닫음 when `action`이 reject
 
 ## AC 커버리지
 

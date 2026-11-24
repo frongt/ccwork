@@ -30,7 +30,7 @@ async function renderEditor(onDone = vi.fn()) {
   );
   const view = render(ui(null));
   await act(async () => {}); // fetchNotes 응답 반영
-  const selectNote = (id: string) => view.rerender(ui(id));
+  const selectNote = (id: string | null) => view.rerender(ui(id));
   return { selectNote, onDone };
 }
 
@@ -249,6 +249,37 @@ describe('NoteEditor 태그', () => {
       content: '내용 C',
       tags: [],
     });
+  });
+
+  // E16
+  // 회귀 테스트: 기존 NoteEditor의 reset 호출이 이미 충족하는 동작이라 Red 단계에서도 통과한다.
+  it('should 이전 노트의 태그를 지우고 태그 목록 영역을 비움 when 태그가 있는 노트(test-2)에서 tags 필드가 없는 노트(test-3)로 전환', async () => {
+    const { selectNote } = await renderEditor();
+    selectNote('test-2');
+    await screen.findByDisplayValue('제목 B');
+    expect(screen.getByText('design')).toBeInTheDocument();
+
+    selectNote('test-3');
+
+    expect(await screen.findByDisplayValue('제목 C')).toBeInTheDocument();
+    expect(screen.queryByText('design')).not.toBeInTheDocument();
+  });
+
+  // E17
+  // 회귀 테스트: 기존 NoteEditor의 reset 호출이 이미 충족하는 동작이라 Red 단계에서도 통과한다.
+  it('should 이전 노트의 미저장 태그가 남지 않음 when 노트 선택이 해제(selectedNoteId null)된 뒤 다른 노트를 선택', async () => {
+    const user = userEvent.setup();
+    const { selectNote } = await renderEditor();
+    selectNote('test-1');
+    await user.click(await screen.findByRole('button', { name: '태그 추가' }));
+    await addTag(user, 'react'); // 저장하지 않은 태그
+
+    selectNote(null);
+    expect(screen.getByText('노트를 선택하거나 새 노트를 만드세요')).toBeInTheDocument();
+    selectNote('test-3');
+
+    expect(await screen.findByDisplayValue('제목 C')).toBeInTheDocument();
+    expect(screen.queryByText('react')).not.toBeInTheDocument();
   });
 
   // E14

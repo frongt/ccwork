@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNotes } from '../context/NotesContext';
+import { useTagEditor } from '../hooks/useTagEditor';
+import { TagInput } from './TagInput';
+import { TagList } from './TagList';
 
 interface NoteEditorProps {
   selectedNoteId: string | null;
@@ -12,6 +15,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [saving, setSaving] = useState(false);
+  const { tags, isInputOpen, inputValue, toggleInput, changeInput, addTag, reset } = useTagEditor();
 
   const selectedNote = notes.find((n) => n.id === selectedNoteId);
 
@@ -20,6 +24,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
     if (selectedNote) {
       setTitle(selectedNote.title);
       setContent(selectedNote.content);
+      reset(selectedNote.tags ?? []);
     } else if (isCreating) {
       setTitle('');
       setContent('');
@@ -37,7 +42,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
       if (isCreating) {
         await createNote(title, content);
       } else if (selectedNoteId) {
-        await updateNote(selectedNoteId, { title, content });
+        await updateNote(selectedNoteId, { title, content, tags });
       }
       onDone();
     } catch (e) {
@@ -53,9 +58,7 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
       <div className="flex items-center justify-center h-full">
         <div className="text-center space-y-3">
           <p className="text-5xl">📝</p>
-          <p className="text-muted-foreground text-sm">
-            노트를 선택하거나 새 노트를 만드세요
-          </p>
+          <p className="text-muted-foreground text-sm">노트를 선택하거나 새 노트를 만드세요</p>
         </div>
       </div>
     );
@@ -76,6 +79,20 @@ export function NoteEditor({ selectedNoteId, isCreating, onDone }: NoteEditorPro
         placeholder="제목"
         className="w-full text-xl font-bold text-foreground bg-transparent border-none outline-none placeholder:text-muted-foreground/50 mb-4"
       />
+
+      {/* 태그 (생성 모드에서는 숨김) */}
+      {!isCreating && (
+        <div className="flex flex-col gap-2 mb-4">
+          <TagInput
+            isOpen={isInputOpen}
+            value={inputValue}
+            onToggle={toggleInput}
+            onChange={changeInput}
+            onSubmit={addTag}
+          />
+          <TagList tags={tags} />
+        </div>
+      )}
 
       {/* 구분선 */}
       <div className="h-px bg-border mb-4" />
