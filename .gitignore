@@ -30,3 +30,6 @@ dist-ssr/
 
 # Claude Code (personal settings)
 .claude/settings.local.json
+
+# coverage
+coverage
